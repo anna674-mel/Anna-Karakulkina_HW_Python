@@ -69,6 +69,7 @@ def test_contains_negative(string, symbol, expected):
     else:
         assert string_utils.contains(string, symbol) == expected
 
+
 @pytest.mark.positive
 @pytest.mark.parametrize("input_string, symbol, expected", [
     ("SkyPro", "k", "SyPro"),  # Удаление одного символа
