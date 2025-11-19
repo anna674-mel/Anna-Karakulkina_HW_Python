@@ -14,6 +14,7 @@ class CalculatorPage:
         self.button_8 = (By.XPATH, "//span[text()='8']")
         self.button_equals = (By.XPATH, "//span[text()='=']")
         self.result_screen = (By.CSS_SELECTOR, ".screen")
+        self.spinner = (By.CSS_SELECTOR, "#spinner")
 
     def open(self, url):
         """Открыть страницу калькулятора"""
@@ -49,3 +50,9 @@ class CalculatorPage:
         """Получить текущий результат из экрана"""
         element = self.wait.until(EC.visibility_of_element_located(self.result_screen))
         return element.text
+    
+    def invisible_element(self):
+        self.wait.until(EC.invisibility_of_element_located(self.spinner))
+    
+    def visible_element(self):
+        self.wait.until(EC.visibility_of_element_located(self.spinner))

@@ -7,7 +7,7 @@ class TestCalculator(unittest.TestCase):
     
     def setUp(self):
         """Подготовка перед каждым тестом"""
-        self.driver = webdriver.Chrome()  # Или другой браузер
+        self.driver = webdriver.Chrome() 
         self.calculator = CalculatorPage(self.driver)
 
     def tearDown(self):
@@ -27,6 +27,8 @@ class TestCalculator(unittest.TestCase):
         self.calculator.click_plus()
         self.calculator.click_number_8()
         self.calculator.click_equals()
+        self.calculator.visible_element()
+        self.calculator.invisible_element()
         
         # Проверить результат через 45+ секунд
         result = self.calculator.get_result()

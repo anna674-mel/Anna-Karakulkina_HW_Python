@@ -10,8 +10,13 @@ from OnlineStorePage import CheckoutPage
 class TestSauceDemo(unittest.TestCase):
     
     def setUp(self):
-        """Подготовка перед каждым тестом"""
-        self.driver = webdriver.Chrome()  # Или другой браузер
+        "Подготовка перед каждым тестом"
+        # Создаём объект опций Chrome
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument("--incognito")
+
+        # Запускаем Chrome с заданными опциями
+        self.driver = webdriver.Chrome(options=chrome_options)
         
         # Создаём объекты страниц
         self.login_page = LoginPage(self.driver)
@@ -20,18 +25,18 @@ class TestSauceDemo(unittest.TestCase):
         self.checkout_page = CheckoutPage(self.driver)
 
     def tearDown(self):
-        """Завершение после каждого теста"""
+        "Завершение после каждого теста"
         self.driver.quit()
 
     def test_purchase_flow(self):
-        """Тест: покупка товаров с проверкой итоговой суммы"""
+        "Тест: покупка товаров с проверкой итоговой суммы"
         
         # 1. Открыть сайт магазина
         self.login_page.open("https://www.saucedemo.com/")
-        
+
         # 2. Авторизоваться как standard_user
         self.login_page.login("standard_user", "secret_sauce")
-        
+
         # 3. Добавить товары в корзину
         self.inventory_page.add_backpack()
         self.inventory_page.add_tshirt()
@@ -54,7 +59,7 @@ class TestSauceDemo(unittest.TestCase):
         total = self.checkout_page.get_total_price()
         
         # 8. Проверить, что итоговая сумма равна $58.29
-        expected_total = "$58.29"
+        expected_total = "Total: $58.29"
         self.assertEqual(total, expected_total, f"Ожидаемая сумма: {expected_total}, фактическая: {total}")
 
 
