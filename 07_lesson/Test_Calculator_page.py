@@ -1,39 +1,29 @@
-import unittest
 from selenium import webdriver
-from FormCalculatorPage import CalculatorPage  # Импорт класса страницы
+from FormCalculatorPage import CalculatorPage
 
 
-class TestCalculator(unittest.TestCase):
-    
-    def setUp(self):
-        """Подготовка перед каждым тестом"""
-        self.driver = webdriver.Chrome() 
-        self.calculator = CalculatorPage(self.driver)
+def test_calculator_operation():
+    driver = webdriver.Chrome()
+    calculator = CalculatorPage(driver)
 
-    def tearDown(self):
-        """Завершение после каждого теста"""
-        self.driver.quit()
+    calculator.open(
+        "https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html"
+        )
 
-    def test_calculator_operation(self):
-        """Тест: вычисление 7 + 8 с задержкой 45 сек"""
-        # Открыть страницу калькулятора
-        self.calculator.open("https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html")
-        
-        # Установить задержку 45 секунд
-        self.calculator.set_delay(45)
-        
-        # Нажать кнопки: 7 → + → 8 → =
-        self.calculator.click_number_7()
-        self.calculator.click_plus()
-        self.calculator.click_number_8()
-        self.calculator.click_equals()
-        self.calculator.visible_element()
-        self.calculator.invisible_element()
-        
-        # Проверить результат через 45+ секунд
-        result = self.calculator.get_result()
-        self.assertEqual(result, "15", f"Ожидаемый результат: 15, фактический: {result}")
+    # Установить задержку 45 секунд
+    calculator.set_delay(45)
 
+    calculator.click_number_7()
+    calculator.click_plus()
+    calculator.click_number_8()
+    calculator.click_equals()
+    calculator.visible_element()
+    calculator.invisible_element()
 
-if __name__ == "__main__":
-    unittest.main()
+    # Проверить результат через 45+ секунд
+    result = calculator.get_result()
+    assert result == "15", (
+        f"Результат не совпадает с ожидаемым. Получено: {result}"
+    )
+
+    driver.quit()
