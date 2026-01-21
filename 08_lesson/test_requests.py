@@ -2,7 +2,7 @@ import pytest
 import requests
 
 base_url = "https://ru.yougile.com/api-v2"
-HEADERS = {'Content-Type': 'application/json', 'Authorization': 'Bearer '}
+HEADERS = {'Content-Type': 'application/json', 'Authorization': 'Bearer t8zKSm1SLIuneZRBUCnUFrF9yt2OXU+ajyTgPQCNcJo6NsLPQGtQ9kvc-BICl4gB'}
 
 
 @pytest.fixture
@@ -14,7 +14,7 @@ def create_project():
     project_id = response.json().get("id")
     yield project_id
     # Удаление проекта после теста
-    requests.delete(base_url + '/projects/{project_id}', headers=HEADERS)
+    requests.delete(f"{base_url}/projects/{project_id}", headers=HEADERS)
 
 
 def test_create_project_positive():
@@ -38,7 +38,7 @@ def test_update_project_positive(create_project):
     response = requests.put(base_url + '/projects/' + project_id,
                             headers=HEADERS, json={"title": "Updated Project"})
     assert response.status_code == 200
-    assert response.json().get("id") is not project_id
+    assert response.json().get("id") == project_id
 
 
 def test_update_project_negative():
