@@ -79,11 +79,11 @@ def test_delete_user(session):
     session.commit()
 
     # Удаляем пользователя
-    del_stmt = delete(users).where(users.c.user_id == 10002)
+    del_stmt = delete(users).where(users.c.user_id == userID)
     result = session.execute(del_stmt)
     session.commit()
 
     # Проверяем, что пользователя нет
-    sel = select(users).where(users.c.user_id == 10002)
+    sel = select(users).where(users.c.user_id == userID)
     result = session.execute(sel).fetchone()
-    assert result is None 
+    assert result is None
